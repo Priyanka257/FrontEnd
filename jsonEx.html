@@ -1,0 +1,86 @@
+	<html>
+	<head>
+<style>
+div.ma h2{
+font-family:Algerian;
+ text-shadow: 1px 1px 1px #000;
+}
+</style>
+		    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+		
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		
+		<script>
+		
+var serverResult="";
+
+		$(document).ready(function()
+		{
+			$.ajax({
+  				method: "GET",
+  				crossDomain: true,
+  				url: "https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Ordinary_Drink",
+  				dataType: "json",
+  				async: true,
+  				success: function(data) {
+				serverResult=data;
+  					$("#div").html("");
+  					content="<table class='table table-hover table-striped table-condensed' style='width:100%'>";
+  					for(a in data.drinks)
+  					{
+content+="<tr><td>"+data.drinks[a].strDrink+"</td><td>"+"<img height=100px width=100px src='"+data.drinks[a].strDrinkThumb+"'>"+"</td><td>"+data.drinks[a].idDrink+"</td></tr>";
+  					}
+  					$("#div").append(content);
+  				},
+  				error: function() {
+    				infoContent = "<div>Sorry, data is not coming through. Refresh and try again.</div>";
+  					}
+		});
+		});
+			
+function getResult(){
+
+var isthere=false;
+var searchText=$("#gh").val();
+alert("you entered "+searchText );
+
+for(index in serverResult.drinks){
+//alert(serverResult.drinks[index].drinks.id);
+
+if(serverResult.drinks[index].idDrink===searchText){
+alert("Found");
+isthere=true;
+break;
+}
+}
+if(isthere==false){
+alert("No Available");
+}
+
+//alert(serverResult);
+}
+
+
+				
+</script>
+</head>
+	<body>
+	<div class="ma">
+<center>
+	<h2 class="text-primary">Ordinary Coctail Drink</h2>
+		<hr/>
+       <input tye="text" id="gh"/>
+		<input type="button" value="GetResult" onclick="getResult()"/>
+		</center>
+
+
+
+		</div>
+		<center>
+			<div id="div">
+			</center></div>
+	</body>
+</html>
